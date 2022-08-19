@@ -26,13 +26,25 @@ class Fun(commands.Cog):
     # still working on this, not complete
     @commands.command()
     async def pokemon(self, ctx, name):
-        pokemon = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon/{name}").content.decode("utf-8"))
-        entry = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{name}").content.decode("utf-8"))
+        try:
+            pokemon = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon/{name}").content.decode("utf-8"))
+            entry = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{name}").content.decode("utf-8"))
+        except:
+            await ctx.send("Pokemon not found.")
+            return
         name = entry["name"]
-        dex_id = entry["id"]
-        types = pokemon["types"]
         sprite = f"http://play.pokemonshowdown.com/sprites/ani/{name}.gif"
-        emb = disnake.Embed()
+        emb = disnake.Embed(
+            title = name,
+            description = "Here's all the info I could find:",
+            color = 0xFFFFFF # idea: make this the color of the pokemon at some point
+        )
+        emb.add_field(name="ID", value=entry["id"])
+        typelist = [x["type"]["name"] for x in pokemon["types"]]
+        emb.add_field(name="Types", value=typelist)
+        emb.add_field(name="Pokedex Entry", value=f"https://www.pokemon.com/us/pokedex/{name}")
+        emb.set_image(url=sprite)
+        await ctx.send(embed=emb)
 
 
 def setup(client):
