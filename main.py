@@ -5,8 +5,8 @@ with open("token.txt") as f:
 import time
 timerStart = time.time()
 
-import discord
-from discord.ext import commands
+import disnake
+from disnake.ext import commands
 
 client = commands.Bot(command_prefix="!")
 
