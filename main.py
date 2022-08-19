@@ -7,9 +7,12 @@ with open("token.txt") as f:
 
 timerStart = time.time()
 
-client = commands.Bot(command_prefix="!")
+intents = disnake.Intents.default()
+intents.message_content = True
 
-extensions = ["cogs.general", "jishaku"]
+client = commands.Bot(command_prefix="c!", intents=intents)
+
+extensions = ["cogs.general", "cogs.fun", "jishaku"]
 
 for extension in extensions:
     try:
