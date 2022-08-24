@@ -1,7 +1,8 @@
 from disnake.ext import commands
 import disnake
 import time
-global token
+
+token = None
 with open("token.txt") as f:
     token = f.read()
 
@@ -12,7 +13,7 @@ intents.message_content = True
 
 client = commands.Bot(command_prefix="c!", intents=intents)
 
-extensions = ["cogs.general", "cogs.fun", "jishaku"]
+extensions = ["cogs.general", "cogs.fun", "cogs.owner", "jishaku"]
 
 for extension in extensions:
     try:

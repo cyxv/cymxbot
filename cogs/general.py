@@ -11,11 +11,6 @@ class General(commands.Cog):
         latency = round(self.bot.latency * 1000)
         await ctx.send("Pong! Latency is {}ms.".format(latency))
 
-    @commands.command()
-    @commands.is_owner()
-    async def say(self, ctx, msg):
-        await ctx.send(msg)
-
 
 def setup(client):
     client.add_cog(General(client))

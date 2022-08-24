@@ -33,7 +33,6 @@ class Fun(commands.Cog):
             await ctx.send("Pokemon not found.")
             return
         name = entry["name"]
-        sprite = f"http://play.pokemonshowdown.com/sprites/ani/{name}.gif"
         emb = disnake.Embed(
             title = name,
             description = "Here's all the info I could find:",
@@ -43,7 +42,7 @@ class Fun(commands.Cog):
         typelist = [x["type"]["name"] for x in pokemon["types"]]
         emb.add_field(name="Types", value=typelist)
         emb.add_field(name="Pokedex Entry", value=f"https://www.pokemon.com/us/pokedex/{name}")
-        emb.set_image(url=sprite)
+        emb.set_image(url=f"http://play.pokemonshowdown.com/sprites/ani/{name}.gif")
         await ctx.send(embed=emb)
 
 
