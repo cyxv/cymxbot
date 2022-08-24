@@ -1,4 +1,4 @@
-import requests, json
+import requests, json, random
 import disnake
 from disnake.ext import commands
 
@@ -27,14 +27,14 @@ class Fun(commands.Cog):
     @commands.command()
     async def pokemon(self, ctx, name):
         try:
-            pokemon = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon/{name}").content.decode("utf-8"))
-            entry = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{name}").content.decode("utf-8"))
+            pokemon = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon/{name.lower()}").content.decode("utf-8"))
+            entry = json.loads(requests.get(f"https://pokeapi.co/api/v2/pokemon-species/{name.lower()}").content.decode("utf-8"))
         except:
             await ctx.send("Pokemon not found.")
             return
         name = entry["name"]
         emb = disnake.Embed(
-            title = name,
+            title = name[0].upper() + name[1:],
             description = "Here's all the info I could find:",
             color = 0xFFFFFF # idea: make this the color of the pokemon at some point
         )
@@ -45,6 +45,23 @@ class Fun(commands.Cog):
         emb.set_image(url=f"http://play.pokemonshowdown.com/sprites/ani/{name}.gif")
         await ctx.send(embed=emb)
 
+    @commands.command()
+    async def capybara(self, ctx):
+        request = json.loads(requests.get("https://api.capybara-api.xyz/v1/image/random").content.decode("utf-8"))
+        await ctx.send(embed=disnake.Embed().set_image(url=request["image_urls"]["large"]).set_footer(text="cymx bot"))
+
+    @commands.command()
+    async def capyfact(self, ctx):
+        request = None
+        with open("data/capyfacts.json", "r") as f:
+            request = json.loads(f.read())
+        fact = random.choice(request)
+        emb = disnake.Embed(
+            title = "Fact",
+            color = 0xFFFFFF,
+            description = request["fact"]
+        ).set_footer(text="cymx bot")
+        await ctx.send(embed=emb)
 
 def setup(client):
     client.add_cog(Fun(client))
