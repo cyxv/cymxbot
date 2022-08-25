@@ -1,4 +1,4 @@
-import requests, json, random
+import requests, json, random, os
 import disnake
 from disnake.ext import commands
 
@@ -53,13 +53,13 @@ class Fun(commands.Cog):
     @commands.command()
     async def capyfact(self, ctx):
         request = None
-        with open("data/capyfacts.json", "r") as f:
+        with open(os.path.join(os.path.dirname(__file__)) + "/data/capyfacts.json", "r") as f:
             request = json.loads(f.read())
         fact = random.choice(request)
         emb = disnake.Embed(
             title = "Fact",
             color = 0xFFFFFF,
-            description = request["fact"]
+            description = fact
         ).set_footer(text="cymx bot")
         await ctx.send(embed=emb)
 
