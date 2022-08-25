@@ -9,7 +9,12 @@ class General(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         latency = round(self.bot.latency * 1000)
-        await ctx.send("Pong! Latency is {}ms.".format(latency))
+        emb = disnake.Embed(
+            title = "Pong! :ping_pong:",
+            description = f"Latency is {latency}ms.",
+            color = 0xFFFFFF
+        ).set_footer(text="cymx bot")
+        await ctx.send(embed=emb)
 
 
 def setup(client):
