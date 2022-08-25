@@ -13,7 +13,7 @@ intents.message_content = True
 
 client = commands.Bot(command_prefix="c!", intents=intents)
 
-extensions = ["cogs.general", "cogs.fun", "cogs.owner", "jishaku"]
+extensions = ["cogs.general", "cogs.fun", "cogs.owner", "cogs.errorhandler", "jishaku"]
 
 for extension in extensions:
     try:
