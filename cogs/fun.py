@@ -19,9 +19,8 @@ class Fun(commands.Cog):
 
     @commands.command()
     async def cat(self, ctx):
-        request = requests.get("https://api.thecatapi.com/v1/images/search").content.decode("utf-8")
-        decoded = json.loads(request) # example: [{'id': '<id>', 'url': 'https://cdn2.thecatapi.com/images/<id>.jpg', 'width': <width>, 'height': <height>}]
-        await ctx.send(embed=disnake.Embed().set_image(url=decoded[0]["url"]).set_footer(text="cymx bot"))
+        request = json.loads(requests.get("https://api.thecatapi.com/v1/images/search").content.decode("utf-8")) # example: [{'id': '<id>', 'url': 'https://cdn2.thecatapi.com/images/<id>.jpg', 'width': <width>, 'height': <height>}]
+        await ctx.send(embed=disnake.Embed().set_image(url=request[0]["url"]).set_footer(text="cymx bot"))
 
     # still working on this, not complete
     @commands.command()
